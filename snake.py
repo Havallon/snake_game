@@ -9,9 +9,6 @@ running = True
 dt = 0
 pygame.display.set_caption("Snake Game")
 
-
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-
 rect_x = 0
 rect_y = 0
 direction = "rigth"
@@ -26,12 +23,11 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
 
-    
-    pygame.draw.rect(screen, 'green', [rect_x,rect_y,40,40], 40)
+    pygame.draw.rect(screen, 'green', [rect_x, rect_y, 40, 40], 40)
 
     for i in range(0, 10):
         for j in range(0, 10):
-            pygame.draw.rect(screen, 'white', [i*40,j*40,40,40], 1)
+            pygame.draw.rect(screen, 'white', [i*40, j*40, 40, 40], 1)
 
     if direction == "up":
         rect_y -= 40 * dt
@@ -45,11 +41,11 @@ while running:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w] and direction != "down":
         direction = "up"
-    if keys[pygame.K_s]  and direction != "up":
+    if keys[pygame.K_s] and direction != "up":
         direction = "down"
     if keys[pygame.K_a] and direction != "rigth":
         direction = "left"
-    if keys[pygame.K_d]  and direction != "left":
+    if keys[pygame.K_d] and direction != "left":
         direction = "rigth"
 
     # flip() the display to put your work on screen
