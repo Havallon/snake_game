@@ -8,6 +8,7 @@ class GameLoop:
         pygame.init()
         self.game_objects: list[GameObject] = []
         self.screen = pygame.display.set_mode(config.SCREEN_SIZE)
+        pygame.display.set_caption("Snake")
 
         for obj in game_object_list:
             self.game_objects.append(obj(self.screen))
