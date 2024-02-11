@@ -1,6 +1,4 @@
 from game import GameObject
-import pygame
-import config
 
 
 class Map(GameObject):
