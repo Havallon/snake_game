@@ -11,3 +11,6 @@ class GameObject:
 
     def process(self) -> None:
         pass
+
+    def stop(self) -> None:
+        pass

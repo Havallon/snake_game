@@ -28,4 +28,6 @@ class GameLoop:
             pygame.display.flip()
             self.clock.tick(60)
 
+        for obj in self.game_objects:
+            obj.stop()
         pygame.quit()

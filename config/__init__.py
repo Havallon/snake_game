@@ -1,1 +1,1 @@
-from .config import SCREEN_SIZE
+from .config import SCREEN_SIZE, BLOCKS_PER_LINE, PLAYER_SIZE
