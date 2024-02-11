@@ -1,7 +1,9 @@
 import pygame
-from game import GameObject
 import threading
 import config
+import gc
+from game import GameObject
+from .apple import Apple
 
 
 class Player(GameObject):
@@ -9,7 +11,14 @@ class Player(GameObject):
         self.pos = [0, 0]
         self.direction = "right"
         self.running = True
+        self.apple = self.get_apple_object()
         threading.Thread(target=self.move).start()
+
+    def get_apple_object(self) -> Apple:
+        for obj in gc.get_objects():
+            if isinstance(obj, Apple):
+                return obj
+        return None
 
     def stop(self) -> None:
         self.running = False
@@ -40,8 +49,13 @@ class Player(GameObject):
 
             pygame.time.wait(500)
 
+    def get_apple_collision(self):
+        if self.pos[0] == self.apple.pos[0] and self.pos[1] == self.apple.pos[1]:
+            self.apple.respawn()
+
     def process(self) -> None:
         pygame.draw.rect(self.screen, 'green', self.get_position() + [config.PLAYER_SIZE, config.PLAYER_SIZE])
+        self.get_apple_collision()
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] and self.direction != "down":
