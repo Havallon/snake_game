@@ -27,7 +27,7 @@ while running:
 
     for i in range(0, 10):
         for j in range(0, 10):
-            pygame.draw.rect(screen, 'white', [i*40, j*40, 40, 40], 1)
+            pygame.draw.rect(screen, 'white', [i * 40, j * 40, 40, 40], 1)
 
     if direction == "up":
         rect_y -= 40 * dt
