@@ -28,6 +28,16 @@ class Player(GameObject):
             if self.direction == "right":
                 self.pos[0] += 1
 
+            if self.pos[0] > config.BLOCKS_PER_LINE - 1:
+                self.pos[0] = 0
+            if self.pos[0] < 0:
+                self.pos[0] = config.BLOCKS_PER_LINE - 1
+
+            if self.pos[1] > config.BLOCKS_PER_LINE - 1:
+                self.pos[1] = 0
+            if self.pos[1] < 0:
+                self.pos[1] = config.BLOCKS_PER_LINE - 1
+
             pygame.time.wait(500)
 
     def process(self) -> None:
