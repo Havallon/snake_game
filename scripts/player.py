@@ -37,16 +37,14 @@ class Player(GameObject):
 
     def move(self) -> None:
         while self.running:
-            temp_pos = []
-            for k, v in enumerate(self.tails):
-                temp_pos.append([v.pos[0], v.pos[1]])
-            for k, v in enumerate(self.tails):
-                if k == 0:
+            for k, v in enumerate(reversed(self.tails)):
+                if k == len(self.tails) - 1:
                     v.pos[0] = self.pos[0]
                     v.pos[1] = self.pos[1]
                 else:
-                    v.pos[0] = temp_pos[k - 1][0]
-                    v.pos[1] = temp_pos[k - 1][1]
+                    i = len(self.tails) - 1 - k
+                    v.pos[0] = self.tails[i - 1].pos[0]
+                    v.pos[1] = self.tails[i - 1].pos[1]
 
             if self.direction == "up":
                 self.pos[1] -= 1
@@ -69,7 +67,8 @@ class Player(GameObject):
             if self.pos[1] < 0:
                 self.pos[1] = config.BLOCKS_PER_LINE - 1
 
-            pygame.time.wait(200)
+            self.get_body_collision()
+            pygame.time.wait(100)
 
     def get_apple_collision(self):
         if self.pos[0] == self.apple.pos[0] and self.pos[1] == self.apple.pos[1]:
@@ -79,6 +78,15 @@ class Player(GameObject):
             else:
                 tail = self.tails[-1]
                 self.tails.append(SnakeBody(tail.pos[0], tail.pos[1]))
+
+    def get_body_collision(self):
+        for obj in self.tails:
+            if self.pos[0] == obj.pos[0] and self.pos[1] == obj.pos[1]:
+                if len(self.tails) > 1:
+                    self.running = False
+                    print('Game Over')
+                    return
+        return
 
     def process(self) -> None:
         pygame.draw.rect(self.screen, 'green', self.get_position() + [config.PLAYER_SIZE, config.PLAYER_SIZE])
@@ -94,4 +102,8 @@ class Player(GameObject):
             self.direction = "right"
 
         for k, v in enumerate(self.tails):
-            pygame.draw.rect(self.screen, 'green', v.get_position() + [config.PLAYER_SIZE, config.PLAYER_SIZE], config.PLAYER_SIZE, int(config.PLAYER_SIZE / 2))
+            if k == len(self.tails) - 1:
+                radius = 40
+            else:
+                radius = 10
+            pygame.draw.rect(self.screen, 'green', v.get_position() + [config.PLAYER_SIZE, config.PLAYER_SIZE], border_radius=radius)
